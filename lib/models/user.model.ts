@@ -26,13 +26,15 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
   },
-  planId: {
-    type: Number,
-    default: 1,
+  background: {
+    type: String,
+    default: 'default',
   },
-  creditBalance: {
-    type: Number,
-    default: 10,
+  links: {
+    type: Array,
+  },
+  linkUrl: {
+    type: Array,
   },
 });
 
