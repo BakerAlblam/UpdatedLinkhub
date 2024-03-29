@@ -1,7 +1,7 @@
+'use server';
 import Link from 'next/link';
 import AddLinkForm from '@/components/AddLinkForm';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-
 import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 import { Navbar } from '@/components/Navbar';
@@ -12,10 +12,6 @@ export default async function LinksPage({
 }: {
   params: { slug: string };
 }) {
-  const { userId } = auth();
-  const user = await getUserById(userId as string);
-  console.log(user);
-
   const getBackgroundStyle = (backgroundType: string) => {
     switch (backgroundType) {
       case 'QuantumGradient':
@@ -88,6 +84,12 @@ export default async function LinksPage({
     }
   };
 
+  const { userId } = auth();
+  const user = await getUserById(userId as string);
+  console.log(user);
+  const userLinks = user?.links;
+  const linkUrls = user?.linkUrls;
+
   const backgroundStyle = getBackgroundStyle(user?.background);
 
   if (userId !== params.slug) {
@@ -101,10 +103,10 @@ export default async function LinksPage({
         className="min-h-screen flex-col items-center"
         style={backgroundStyle}
       >
-        <div className=" flex flex-col items-center gap-8 py-12">
+        <div className="flex flex-col items-center gap-8 py-12">
           <Link
             href={`/${user?.username}`}
-            className="block truncate rounded-full bg-white/10 px-4 py-1 text-center text-sm  text-white hover:bg-white/20"
+            className="block truncate rounded-full bg-white/10 px-4 py-1 text-center text-sm text-white hover:bg-white/20"
           >
             Your live URL:{' '}
             <span className="text-large ml-1 text-[hsl(280,100%,70%)]">{`${user?.username}`}</span>
@@ -123,7 +125,25 @@ export default async function LinksPage({
             <span className="text-[hsl(280,100%,70%)]">@{user?.username}</span>
           </h1>
           <AddLinkForm />
-          <div className="flex w-full flex-col space-y-6 px-4  lg:w-2/3"></div>
+          <div className="flex w-full flex-col space-y-6 px-4 lg:w-2/3">
+            {userLinks && userLinks.length !== 0 ? (
+              userLinks.map((link: any, index: any) => (
+                <a
+                  key={index}
+                  href={''} // Redirect to the URL when clicked
+                  className="block w-full truncate rounded-full bg-white py-4 text-center text-lg font-medium text-black hover:bg-black/90 hover:text-white"
+                  target="_blank" // Open the link in a new tab
+                  rel="noopener noreferrer" // Security best practice for opening links in a new tab
+                >
+                  {''}
+                </a>
+              ))
+            ) : (
+              <p className="block w-full truncate rounded-full bg-white/80 py-4 text-center text-lg font-medium text-white hover:bg-white/50">
+                No links added
+              </p>
+            )}
+          </div>
         </div>
       </main>
     </div>
