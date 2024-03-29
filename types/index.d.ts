@@ -8,7 +8,6 @@ declare type CreateUserParams = {
   firstName: string;
   lastName: string;
   photo: string;
-  background: string;
 };
 
 declare type UpdateUserParams = {
