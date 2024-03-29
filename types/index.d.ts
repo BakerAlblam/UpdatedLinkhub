@@ -16,5 +16,4 @@ declare type UpdateUserParams = {
   lastName: string;
   username: string;
   photo: string;
-  background: string;
 };
