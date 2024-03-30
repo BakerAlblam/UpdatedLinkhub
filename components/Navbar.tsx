@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 'use client';
 import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
-import Backgrounds from './Backgrounds';
 import AddLinkForm from './AddLinkForm';
 import {
   Drawer,
@@ -18,6 +17,7 @@ import { Button } from './ui/button';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { Settings } from 'lucide-react';
 
 const bgs = [
   {
@@ -86,9 +86,10 @@ export function Navbar() {
 
   return (
     <header className="flex items-center justify-center gap-10 border-b px-4 py-2 text-center md:px-8 lg:px-10 xl:px-12">
-      <Backgrounds authId={authId!} />
       <Drawer>
-        <DrawerTrigger>Open</DrawerTrigger>
+        <DrawerTrigger>
+          <Settings />
+        </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
             <DrawerTitle>Choose your background</DrawerTitle>

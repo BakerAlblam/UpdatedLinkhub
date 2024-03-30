@@ -15,7 +15,7 @@ import React, { Suspense } from 'react';
 
 export default async function HomePage() {
   const sesh = await currentUser();
-  console.log(sesh);
+
   if (sesh) {
     redirect(`/links/${sesh?.id}`);
   }

@@ -47,7 +47,7 @@ const AddLinkForm = () => {
           { platform: data?.link as string, url: data?.content as string },
         ],
       });
-      console.log(res);
+
       if (res.status === 200) {
         toast({
           title: 'Link added',

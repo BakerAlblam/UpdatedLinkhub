@@ -92,7 +92,7 @@ export default async function LinksPage({
 
   const { userId } = auth();
   const user = await getUserById(userId as string);
-  console.log(user);
+
   const links = user?.socialLinks;
 
   const backgroundStyle = getBackgroundStyle(user?.background);
