@@ -30,3 +30,21 @@ export async function POST(nextRequest: NextRequest) {
     return NextResponse.json({ message: 'Insert failed', details: error });
   }
 }
+
+export async function PUT(Request: NextRequest) {
+  await connectToDatabase();
+  const { clerkId, background } = await Request.json();
+
+  try {
+    const user = await User.findOne({ clerkId });
+    if (!user) {
+      return NextResponse.json({ message: 'No user' }, { status: 404 });
+    }
+    user.background = background;
+
+    await user.save();
+    return NextResponse.json({ message: 'Success!', user });
+  } catch (error) {
+    return NextResponse.json({ message: 'Insert failed', details: error });
+  }
+}
