@@ -37,15 +37,15 @@ const AddLinkForm = () => {
   const user = useUser();
   const data = user;
   const userId = data?.user?.id;
-  console.log(userId);
 
   const onSubmit = async (data: FieldValues) => {
     try {
       isSubmitting;
       const res = await axios.post('/api/postlinks', {
         clerkId: userId,
-        linkUrl: data?.content as string,
-        links: data?.link as string,
+        links: [
+          { platform: data?.link as string, url: data?.content as string },
+        ],
       });
       console.log(res);
       if (res.status === 200) {

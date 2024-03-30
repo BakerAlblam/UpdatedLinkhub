@@ -1,5 +1,16 @@
 import { Schema, model, models } from 'mongoose';
 
+const SocialLinkSchema = new Schema({
+  platform: {
+    type: String,
+    required: true,
+  },
+  url: {
+    type: String,
+    required: true,
+  },
+});
+
 const UserSchema = new Schema({
   clerkId: {
     type: String,
@@ -30,12 +41,7 @@ const UserSchema = new Schema({
     type: String,
     default: 'default',
   },
-  links: {
-    type: Array,
-  },
-  linkUrl: {
-    type: Array,
-  },
+  socialLinks: [SocialLinkSchema], // Embedding social links within the user schema
 });
 
 const User = models?.User || model('User', UserSchema);

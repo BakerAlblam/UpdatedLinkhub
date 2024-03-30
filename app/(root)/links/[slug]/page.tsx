@@ -7,6 +7,12 @@ import { redirect } from 'next/navigation';
 import { Navbar } from '@/components/Navbar';
 import { getUserById } from '@/lib/actions/user.actions';
 
+type Link = {
+  platform: string;
+  url: string;
+  _id: string;
+};
+
 export default async function LinksPage({
   params,
 }: {
@@ -87,8 +93,7 @@ export default async function LinksPage({
   const { userId } = auth();
   const user = await getUserById(userId as string);
   console.log(user);
-  const userLinks = user?.links;
-  const linkUrls = user?.linkUrls;
+  const links = user?.socialLinks;
 
   const backgroundStyle = getBackgroundStyle(user?.background);
 
@@ -121,22 +126,22 @@ export default async function LinksPage({
               {user?.username}{' '}
             </AvatarFallback>
           </Avatar>
-          <h1 className="items-end text-3xl font-extrabold tracking-tight sm:text-[3rem]">
+          <h1 className="items-end text-3xl font-extrabold tracking-tight sm:text-[3rem] mb-3">
             <span className="text-[hsl(280,100%,70%)]">@{user?.username}</span>
           </h1>
-          <AddLinkForm />
-          <div className="flex w-full flex-col space-y-6 px-4 lg:w-2/3">
-            {userLinks && userLinks.length !== 0 ? (
-              userLinks.map((link: any, index: any) => (
-                <a
-                  key={index}
-                  href={''} // Redirect to the URL when clicked
+
+          <div className="flex w-full flex-col space-y-10 px-4 lg:w-2/3">
+            {links && links.length !== 0 ? (
+              links.map((link: Link) => (
+                <Link
+                  key={link?._id}
+                  href={link?.url}
                   className="block w-full truncate rounded-full bg-white py-4 text-center text-lg font-medium text-black hover:bg-black/90 hover:text-white"
-                  target="_blank" // Open the link in a new tab
-                  rel="noopener noreferrer" // Security best practice for opening links in a new tab
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {''}
-                </a>
+                  {link?.platform}
+                </Link>
               ))
             ) : (
               <p className="block w-full truncate rounded-full bg-white/80 py-4 text-center text-lg font-medium text-white hover:bg-white/50">
