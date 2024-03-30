@@ -73,9 +73,9 @@ export function Navbar() {
 
   const handleImageClick = async (name: string) => {
     try {
-      await axios.put(`/api/users`, {
+      await axios.put(`/api/postlinks`, {
         background: name, // Change this line
-        authId,
+        clerkId: authId,
       });
       router.refresh();
       setSelectImage(name);
@@ -92,7 +92,9 @@ export function Navbar() {
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Choose your background</DrawerTitle>
+            <DrawerTitle className="text-center mb-4">
+              Choose background
+            </DrawerTitle>
             <DrawerDescription>
               {' '}
               <form className="mx-auto max-w-screen-lg">
@@ -118,7 +120,6 @@ export function Navbar() {
             </DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
-            <Button>Submit</Button>
             <DrawerClose>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
